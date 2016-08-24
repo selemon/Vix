@@ -16,16 +16,35 @@
          table tr:nth-child(even) {
             background-color: #ffffff;
          }
+
+
+         #parent_div_1, #parent_div_2 {
+           width: 100%;
+           height: 100%;
+           margin-right: 10px;
+           float: left;
+         }
+         .child_div_1 {
+           float: left;
+           margin-right: 5px;
+         }
       </style>
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
       
    </head>
    <body>
       <div>
          <div><img src="Viz_logo.png"></div>
       </div>
-      <div ng-app = "" ng-controller = "playerController">
-      <button ng-click="addPlayer">Add Player</button>
-         <table>
+      <br>
+      <div id="parent_div_1">
+         <div class="child_div_1"><button ng-click="addPlayer" data-toggle="modal" data-target="#myModal">Add Player</button></div>
+         <div ng-app = "" ng-controller = "playerController" >
+      
+         <div><table>
             <tr>
                <th> </th>
                <th>firstName</th>
@@ -44,7 +63,35 @@
                <td>{{ player.Email }}</td>
             </tr>
          </table>
+         </div>
       </div>
+      </div>
+
+
+
+
+
+      <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
       
       <script>
          function playerController($scope,$http) {
