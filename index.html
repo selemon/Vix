@@ -20,9 +20,11 @@
       
    </head>
    <body>
-      <h2></h2>
-      <div ng-app = "" ng-controller = "studentController">
-      
+      <div>
+         <div><img src="Viz_logo.png"></div>
+      </div>
+      <div ng-app = "" ng-controller = "playerController">
+      <button ng-click="addPlayer">Add Player</button>
          <table>
             <tr>
                <th> </th>
@@ -33,23 +35,23 @@
                <th>Email</th>
             </tr>
          
-            <tr ng-repeat = "student in students">
-               <td>{{ student.id }}</td>
-               <td>{{ student.firstName }}</td>
-               <td>{{ student.surname }}</td>
-               <td><img ng-src="{{ student.Tier }}" alt="Description" /></td>
-               <td><img ng-src="{{ student.Sex }}" alt="Description" /></td>
-               <td>{{ student.Email }}</td>
+            <tr ng-repeat = "player in players">
+               <td>{{ player.id }}</td>
+               <td>{{ player.firstName }}</td>
+               <td>{{ player.surname }}</td>
+               <td><img ng-src="{{ player.Tier }}" alt="Description" /></td>
+               <td><img ng-src="{{ player.Sex }}" alt="Description" /></td>
+               <td>{{ player.Email }}</td>
             </tr>
          </table>
       </div>
       
       <script>
-         function studentController($scope,$http) {
+         function playerController($scope,$http) {
             var url = "data.json";
          
             $http.get(url).success( function(response) {
-               $scope.students = response;
+               $scope.players = response;
             });
          }
       </script>
