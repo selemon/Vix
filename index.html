@@ -7,8 +7,13 @@
             border: 1px solid grey;
             border-collapse: collapse;
             padding: 5px;
+
          }
          
+         table{
+          width: 80%;
+         }
+
          table tr:nth-child(odd) {
             background-color: #f2f2f2;
          }
@@ -23,11 +28,19 @@
            height: 100%;
            margin-right: 10px;
            float: left;
+           background-color: #e6e6e6;
          }
          .child_div_1 {
            float: left;
-           margin-right: 5px;
+           margin-right: 50px;
+           margin-left: 50px;
          }
+         #logo{
+          margin-left: 50px;
+          margin-top: 10px;
+         }
+
+
       </style>
       <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -37,10 +50,12 @@
    </head>
    <body>
       <div>
-         <div><img src="Viz_logo.png"></div>
+         <div id="logo"><img src="Viz_logo.png"></div>
       </div>
       <br>
       <div id="parent_div_1">
+        <br>
+        <br>
          <div class="child_div_1"><button ng-click="addPlayer" data-toggle="modal" data-target="#myModal">Add Player</button></div>
          <div ng-app = "" ng-controller = "playerController" >
       
@@ -55,11 +70,11 @@
             </tr>
          
             <tr ng-repeat = "player in players">
-               <td>{{ player.id }}</td>
+               <td><div ng-attr-id="{{$index + 1}}"></div></td>
                <td>{{ player.firstName }}</td>
                <td>{{ player.surname }}</td>
-               <td><img ng-src="{{ player.Tier }}" alt="Description" /></td>
-               <td><img ng-src="{{ player.Sex }}" alt="Description" /></td>
+               <td><img ng-src="tier_{{ player.Tier }}.png" alt="Description" /></td>
+               <td><img ng-src="icon-{{ player.Sex }}.png" alt="Description" /></td>
                <td>{{ player.Email }}</td>
             </tr>
          </table>
@@ -82,25 +97,26 @@
           <!-- <p>Some text in the modal.</p> -->
           
           <fieldset>
-          <label>First Name</label><input type="text" ng-model="name" placeholder="First Name" ><br />
-          <label>Surname</label><input type="text" ng-model="surname" placeholder="Surname" ><br />
+          <label>First Name </label>
+          <input type="text" ng-model="name" placeholder="First Name" ><br />
+          <label>Surname </label>
+          <input type="text" ng-model="surname" placeholder="Surname" ><br />
           <!-- Sex -->
-                 <label>Sex</label> 
-                 <select id='sex'>
+                 <label>Sex </label> 
+                 <!-- <select id='sex'>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
-                  </select>
-               
+                  </select> -->
+               <select data-ng-options="o.sex for o in options" data-ng-model="selectedOption"></select>
+
 
                <!-- Tier -->
-               <label>Tier</label>  
-               <select id='tier'>
-                       <option value="gold">gold</option>
-                       <option value="bronze">bronze</option>
-                       <option value="silver">silver</option>
-                     </select> <br/>
-          <label>Email</label><input type="text" ng-model="email" placeholder="Email" ><br />
-          <button type="button" ng-click="addPerson()">Add Person</button>
+               <label>tier </label>
+               <select data-ng-options="o.tier for o in options2" data-ng-model="selectedOptionTier"></select>  
+               <br/>
+          <label>Email </label>
+          <input type="text" ng-model="email" placeholder="Email" ><br />
+          
           </fieldset>
 
 
@@ -115,7 +131,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                 <button type="button" class="btn btn-primary" ng-click="addPlayer()">Submit</button>
+                 <button type="button" ng-click="addPerson()">Add Person</button>
         </div>
       </div>
       
@@ -139,20 +155,31 @@
       <script>
          function playerController($scope,$http) {
             var url = "data.json";
-            
-            
+            $scope.options = [{ sex: "male" }, { sex: "female"}];
+            $scope.options2 = [{tier: "gold"}, {tier: "bronze"}, {tier: "silver"}];
+            $scope.selectedOption = $scope.options[0];
+            $scope.selectedOptionTier = $scope.options2[0];
 
             $http.get(url).success( function(response) {
                $scope.players = response;
             });
 
             
-                  
+                 
+
+
+
                 $scope.addPerson = function(){
+
+                  
+                  // $scope.selectedOption = $scope.options[1];
+
                   var person = {
                       firstName: $scope.name,
                       surname: $scope.surname,
-                      Email: $scope.email,
+                      Sex: $scope.selectedOption.sex,
+                      Tier: $scope.selectedOptionTier.tier,
+                      Email: $scope.email
                   };
                   
                   $scope.players.push(person);
