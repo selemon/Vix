@@ -14,13 +14,13 @@
           width: 80%;
          }
 
-         table tr:nth-child(odd) {
+         /*table tr:nth-child(odd) {
             background-color: #f2f2f2;
          }
          
          table tr:nth-child(even) {
             background-color: #ffffff;
-         }
+         }*/
 
 
          #parent_div_1, #parent_div_2 {
@@ -39,7 +39,37 @@
           margin-left: 50px;
           margin-top: 10px;
          }
+         .mode-inner-body{
+          margin-left: 50px;
+          
+         }
+         .modal-body {
+            background-color: #e6e6e6;
+         }
+         .modal-title{
+          color: blue;
+         }
+         .modal-header{
+          background-color: black;
+         }
+         textarea
+          {
+            width: 150px;
+            height: 100px;
+            vertical-align: middle;
+          }
+          input
+          {
+            width: 150px;
+            vertical-align: middle;
+          }
 
+
+          .selected {
+              background-color:blue;
+              color:white;
+              /*font-weight:bold;*/
+          }
 
       </style>
       <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -62,15 +92,26 @@
          <div><table>
             <tr>
                <th> </th>
-               <th>firstName</th>
-               <th>surname</th>
-               <th>Tier</th>
-               <th>Sex</th>
-               <th>Email</th>
+               <th><a ng-click="sortBy('firstName')">firstName</a>
+                <span class="sortorder" ng-show="propertyName === 'firstName'" ng-class="{reverse: reverse}"></span>
+               </th>
+               <th><a ng-click="sortBy('surname')">surname</a>
+                <span class="sortorder" ng-show="propertyName === 'surname'" ng-class="{reverse: reverse}"></span>
+
+               </th>
+               <th><a ng-click="sortBy('Tier')">Tier</a>
+                <span class="sortorder" ng-show="propertyName === 'Tier'" ng-class="{reverse: reverse}"></span>
+               </th>
+               <th><a ng-click="sortBy('Sex')">Sex</a>
+                <span class="sortorder" ng-show="propertyName === 'Sex'" ng-class="{reverse: reverse}"></span>
+               </th>
+               <th><a ng-click="sortBy('Tier')">Email</a>
+                <span class="sortorder" ng-show="propertyName === 'email'" ng-class="{reverse: reverse}"></span>
+               </th>
             </tr>
          
-            <tr ng-repeat = "player in players">
-               <td><div ng-attr-id="{{$index + 1}}"></div></td>
+            <tr ng-repeat = "player in players | orderBy:'firstName':reverse" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
+               <td>{{$index}}</td>
                <td>{{ player.firstName }}</td>
                <td>{{ player.surname }}</td>
                <td><img ng-src="tier_{{ player.Tier }}.png" alt="Description" /></td>
@@ -93,14 +134,14 @@
           <h4 class="modal-title">Add Player</h4>
         </div>
         <div class="modal-body">
-         <div>
+         <div class="mode-inner-body">
           <!-- <p>Some text in the modal.</p> -->
           
           <fieldset>
           <label>First Name </label>
-          <input type="text" ng-model="name" placeholder="First Name" ><br />
+          <input type="text" ng-model="name" placeholder="First Name" ><br /><br>
           <label>Surname </label>
-          <input type="text" ng-model="surname" placeholder="Surname" ><br />
+          <input type="text" ng-model="surname" placeholder="Surname" ><br /><br>
           <!-- Sex -->
                  <label>Sex </label> 
                  <!-- <select id='sex'>
@@ -113,7 +154,7 @@
                <!-- Tier -->
                <label>tier </label>
                <select data-ng-options="o.tier for o in options2" data-ng-model="selectedOptionTier"></select>  
-               <br/>
+               <br/><br>
           <label>Email </label>
           <input type="text" ng-model="email" placeholder="Email" ><br />
           
@@ -165,7 +206,10 @@
             });
 
             
-                 
+                 $scope.selectedRow = null;  // initialize our variable to null
+                  $scope.setClickedRow = function(index){  //function that sets the value of selectedRow to current index
+                     $scope.selectedRow = index;
+                  }
 
 
 
@@ -184,6 +228,17 @@
                   
                   $scope.players.push(person);
                 };
+
+
+              $scope.propertyName = 'firstName';
+                $scope.reverse = true;
+                // $scope.friends = $scope.players;
+
+                $scope.sortBy = function(propertyName) {
+                  $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+                  $scope.propertyName = propertyName;
+                };
+
 
 
          }
