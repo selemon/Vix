@@ -1,10 +1,23 @@
 [
    {  
-      "id": 1,
       "firstName" : "Selemon",
       "surname" : "Yitbarek",
-      "Tier" : "tier_bronze.png",
-      "Sex" : "icon-male.png",
+      "Tier" : "bronze",
+      "Sex" : "male",
       "Email" : "sele@hotmail.com"
+   },
+   {  
+      "firstName" : "Michael",
+      "surname" : "Jordan",
+      "Tier" : "gold",
+      "Sex" : "male",
+      "Email" : "mike@hotmail.com"
+   },
+   {  
+      "firstName" : "Anna",
+      "surname" : "James",
+      "Tier" : "silver",
+      "Sex" : "female",
+      "Email" : "anna@hotmail.com"
    }
 ]
