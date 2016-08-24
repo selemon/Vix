@@ -1,0 +1,10 @@
+[
+   {  
+      "id": 1,
+      "firstName" : "Selemon",
+      "surname" : "Yitbarek",
+      "Tier" : "tier_bronze.png",
+      "Sex" : "icon-male.png",
+      "Email" : "sele@hotmail.com"
+   }
+]
